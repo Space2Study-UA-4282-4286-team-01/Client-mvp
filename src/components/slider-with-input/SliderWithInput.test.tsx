@@ -4,32 +4,31 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import SliderWithInput from './SliderWithInput'
 
 vi.mock('~/hooks/use-debounce', () => ({
-  useDebounce: (fn: any) => fn
-}))
-
-vi.mock('~/utils/range-filter', () => ({
-  checkNumberIsInRange: ({ inputValue, min, max }: any) => {
-    if (inputValue === null || isNaN(inputValue)) return min
-    if (inputValue > max) return max
-    if (inputValue < min) return min
-    return inputValue
-  },
-  createMarks: () => []
+  useDebounce: <T extends (...args: unknown[]) => void>(fn: T) => fn
 }))
 
 vi.mock('@mui/material/Slider', () => ({
-  default: (props: any) => (
+  default: (props: {
+    value: number
+    onChange: (event: Event, value: number) => void
+  }) => (
     <input
       type="range"
       data-testid="slider"
       value={props.value}
-      onChange={(e) => props.onChange(e, Number(e.target.value))}
+      onChange={(e) =>
+        props.onChange(e as unknown as Event, Number(e.target.value))
+      }
     />
   )
 }))
 
 vi.mock('@mui/material/TextField', () => ({
-  default: (props: any) => (
+  default: (props: {
+    value: string | number
+    onChange: React.ChangeEventHandler<HTMLInputElement>
+    onBlur: React.FocusEventHandler<HTMLInputElement>
+  }) => (
     <input
       data-testid="input"
       value={props.value}
@@ -78,10 +77,11 @@ describe('SliderWithInput', () => {
     const input = screen.getByTestId('input')
 
     fireEvent.change(input, { target: { value: '' } })
+    fireEvent.blur(input)
 
-    expect(input).toHaveValue('')
-  })
-
+    expect(onChangeMock).toHaveBeenCalledWith(0)
+})
+  
   it('does not update prices when input is blurred and value has not changed', () => {
     render(<SliderWithInput {...defaultProps} />)
 
@@ -99,6 +99,7 @@ describe('SliderWithInput', () => {
     fireEvent.blur(input)
 
     expect(input).toHaveValue('100')
+    expect(onChangeMock).toHaveBeenCalledWith(100)
   })
 })
 
