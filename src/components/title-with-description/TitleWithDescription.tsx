@@ -43,11 +43,7 @@ const TitleWithDescription = ({
           </Typography>
         </Tooltip>
       ) : (
-        <Typography
-          onClick={handleTooltip}
-          sx={{ fontWeight: 400 }}
-          variant='body2'
-        >
+        <Typography sx={style.description} variant='body2'>
           {description}
         </Typography>
       )}
