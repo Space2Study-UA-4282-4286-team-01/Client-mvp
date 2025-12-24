@@ -42,15 +42,15 @@ describe('AppContentSwitcher', () => {
   })
 
   it('should call the onChange function when the switch is clicked', () => {
-  const onChange = vi.fn()
+    const onChange = vi.fn()
 
-  render(
-    <AppContentSwitcher
-      active={false}
-      onChange={onChange}
-      switchOptions={switchOptions}
-      typographyVariant='body1'
-    />
+    render(
+      <AppContentSwitcher
+        active={false}
+        onChange={onChange}
+        switchOptions={switchOptions}
+        typographyVariant='body1'
+      />
   )
 
   fireEvent.click(screen.getByRole('checkbox'))
