@@ -5,6 +5,8 @@ import styles from '~/containers/guest-home-page/signup-dialog/SignUpDialog.styl
 import SignUpForm from '~/containers/guest-home-page/signup-form/SignUpForm'
 import studentImg from '~/assets/img/signup-dialog/student.svg'
 import tutorImg from '~/assets/img/signup-dialog/tutor.svg'
+import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
+import { signup } from '~/constants'
 
 const SignUpDialog = ({ userRole }) => {
   const images = { student: studentImg, tutor: tutorImg }
@@ -36,6 +38,7 @@ const SignUpDialog = ({ userRole }) => {
             handleChange={handleInputChange}
             handleSubmit={handleSubmit}
           />
+          <GoogleLogin buttonWidth={styles.form.maxWidth} type={signup} />
         </Box>
       </Box>
     </Box>
