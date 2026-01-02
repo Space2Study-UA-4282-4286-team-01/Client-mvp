@@ -17,8 +17,8 @@ const SignUpDialog = ({ userRole }) => {
   const handleBlur = () => {}
   const handleInputChange = () => {}
   const handleSubmit = () => {}
-  const data = { email: '', password: '' }
-  const errors = { email: '', password: '' }
+  const data = {}
+  const errors = {}
 
   return (
     <Box sx={styles.root}>

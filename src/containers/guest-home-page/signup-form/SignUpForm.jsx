@@ -65,7 +65,6 @@ const SignUpForm = ({
           onChange={handleChange('firstName')}
           required
           size='large'
-          sx={{ mb: '5px' }}
           type='text'
           value={data.firstName}
         />
@@ -79,7 +78,6 @@ const SignUpForm = ({
           onChange={handleChange('lastName')}
           required
           size='large'
-          sx={{ mb: '5px' }}
           type='text'
           value={data.lastName}
         />
@@ -107,6 +105,7 @@ const SignUpForm = ({
         onBlur={handleBlur('password')}
         onChange={handleChange('password')}
         required
+        sx={{ mb: '5px' }}
         type={showPassword ? 'text' : 'password'}
         value={data.password}
       />
@@ -126,6 +125,7 @@ const SignUpForm = ({
       <FormControlLabel
         control={<Checkbox name='checkboxText' />}
         label={checkboxText}
+        sx={{ mb: '23px' }}
       />
 
       <AppButton disabled sx={styles.signupButton} type='submit'>

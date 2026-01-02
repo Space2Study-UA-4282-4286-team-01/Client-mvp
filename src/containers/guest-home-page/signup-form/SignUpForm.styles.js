@@ -6,7 +6,8 @@ export const styles = {
   },
   userName: {
     display: 'flex',
-    gap: '16px'
+    gap: '16px',
+    mb: '5px'
   },
   label: {
     display: 'flex',
@@ -25,19 +26,5 @@ export const styles = {
   signupButton: {
     width: '100%',
     py: '14px'
-  },
-  forgotPass: {
-    cursor: 'pointer',
-    textDecoration: 'none',
-    color: 'primary.900',
-    '&:hover': {
-      textDecoration: 'underline'
-    },
-    '&:focus': {
-      outline: '2px solid',
-      borderRadius: '2px'
-    },
-    mb: '20px',
-    alignSelf: 'end'
   }
 }
