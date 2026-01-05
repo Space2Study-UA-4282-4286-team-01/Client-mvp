@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import useInputVisibility from '~/hooks/use-input-visibility'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { Link as RouterLink } from 'react-router-dom'
+import type { ChangeEvent, FormEvent } from 'react'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -12,13 +13,21 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 
 import { styles } from '~/containers/guest-home-page/signup-form/SignUpForm.styles'
 
+interface SignUpFormProps {
+  handleSubmit: (event?: FormEvent<HTMLFormElement>) => void
+  handleChange: (
+    field: string
+  ) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  data: { [key: string]: string }
+  errors: { [key: string]: string }
+}
+
 const SignUpForm = ({
   handleSubmit,
   handleChange,
-  handleBlur,
   data,
   errors
-}) => {
+}: SignUpFormProps) => {
   const { inputVisibility: passwordVisibility, showInputText: showPassword } =
     useInputVisibility(errors.password)
 
@@ -39,7 +48,7 @@ const SignUpForm = ({
         to={termOfUse.path}
         variant='body2'
       >
-        Terms
+        {t('common.labels.terms')}
       </Typography>
       <Typography variant='body2'>{t('signup.and')}</Typography>
       <Typography
@@ -48,7 +57,7 @@ const SignUpForm = ({
         to={privacyPolicy.path}
         variant='body2'
       >
-        Privacy Policy
+        {t('common.labels.privacyPolicy')}
       </Typography>
     </Box>
   )
@@ -61,10 +70,9 @@ const SignUpForm = ({
           errorMsg={t(errors.firstName)}
           fullWidth
           label={t('common.labels.firstName')}
-          onBlur={handleBlur('firstName')}
           onChange={handleChange('firstName')}
           required
-          size='large'
+          size='medium'
           type='text'
           value={data.firstName}
         />
@@ -74,10 +82,9 @@ const SignUpForm = ({
           errorMsg={t(errors.lastName)}
           fullWidth
           label={t('common.labels.lastName')}
-          onBlur={handleBlur('lastName')}
           onChange={handleChange('lastName')}
           required
-          size='large'
+          size='medium'
           type='text'
           value={data.lastName}
         />
@@ -88,10 +95,9 @@ const SignUpForm = ({
         errorMsg={t(errors.email)}
         fullWidth
         label={t('common.labels.email')}
-        onBlur={handleBlur('email')}
         onChange={handleChange('email')}
         required
-        size='large'
+        size='medium'
         sx={{ mb: '5px' }}
         type='email'
         value={data.email}
@@ -102,7 +108,6 @@ const SignUpForm = ({
         errorMsg={t(errors.password)}
         fullWidth
         label={t('common.labels.password')}
-        onBlur={handleBlur('password')}
         onChange={handleChange('password')}
         required
         sx={{ mb: '5px' }}
@@ -115,7 +120,6 @@ const SignUpForm = ({
         errorMsg={t(errors.confirmPassword)}
         fullWidth
         label={t('common.labels.confirmPassword')}
-        onBlur={handleBlur('confirmPassword')}
         onChange={handleChange('confirmPassword')}
         required
         type={showConfirmPassword ? 'text' : 'password'}

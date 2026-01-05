@@ -7,15 +7,22 @@ import studentImg from '~/assets/img/signup-dialog/student.svg'
 import tutorImg from '~/assets/img/signup-dialog/tutor.svg'
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import { signup } from '~/constants'
+import { ChangeEvent } from 'react'
 
-const SignUpDialog = ({ userRole }) => {
-  const images = { student: studentImg, tutor: tutorImg }
-  const signUpImg = images[userRole]
+const SignUpDialog = ({ userRole }: { userRole: string }) => {
+  const images: { [key: string]: string } = {
+    student: studentImg,
+    tutor: tutorImg
+  }
+  const signUpImg: string = images[userRole]
 
   const { t } = useTranslation()
 
-  const handleBlur = () => {}
-  const handleInputChange = () => {}
+  const handleInputChange =
+    (field: string) =>
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      console.log(field, event.target.value)
+    }
   const handleSubmit = () => {}
   const data = {}
   const errors = {}
@@ -34,11 +41,14 @@ const SignUpDialog = ({ userRole }) => {
           <SignUpForm
             data={data}
             errors={errors}
-            handleBlur={handleBlur}
             handleChange={handleInputChange}
             handleSubmit={handleSubmit}
           />
-          <GoogleLogin buttonWidth={styles.form.maxWidth} type={signup} />
+          <GoogleLogin
+            buttonWidth={styles.form.maxWidth}
+            role={undefined}
+            type={signup}
+          />
         </Box>
       </Box>
     </Box>
