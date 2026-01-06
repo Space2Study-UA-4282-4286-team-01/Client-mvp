@@ -7,6 +7,9 @@ import studentImg from '~/assets/img/signup-dialog/student.svg'
 import tutorImg from '~/assets/img/signup-dialog/tutor.svg'
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import { signup } from '~/constants'
+import { email, password } from '~/utils/validations/login'
+import useForm from '~/hooks/use-form'
+import { nameFieldValidator } from '~/utils/validations/common'
 
 const SignUpDialog = ({ userRole }) => {
   const images = { student: studentImg, tutor: tutorImg }
@@ -14,11 +17,35 @@ const SignUpDialog = ({ userRole }) => {
 
   const { t } = useTranslation()
 
-  const handleBlur = () => {}
-  const handleInputChange = () => {}
-  const handleSubmit = () => {}
-  const data = {}
-  const errors = {}
+  const { handleSubmit, handleInputChange, handleBlur, data, errors } = useForm(
+    {
+      initialValues: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      },
+      validations: {
+        firstName: nameFieldValidator,
+        lastName: nameFieldValidator,
+        email,
+        password,
+        confirmPassword: (value, data) => {
+          const passwordError = password(value)
+          if (passwordError) {
+            return passwordError
+          }
+
+          if (value !== data.password) {
+            return 'common.errorMessages.passwordsDoNotMatch'
+          }
+
+          return undefined
+        }
+      }
+    }
+  )
 
   return (
     <Box sx={styles.root}>
