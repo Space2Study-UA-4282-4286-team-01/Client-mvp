@@ -11,6 +11,9 @@ import teachImg from '~/assets/img/guest-home-page/teachImg.png'
 import { UserRoleEnum } from '~/types'
 import { styles } from '~/containers/guest-home-page/styles/WhatCanYouDo.styles'
 
+import { useModalContext } from '~/context/modal-context'
+import SignUpDialog from './signup-dialog/SignUpDialog'
+
 const cardData = [
   {
     img: learnImg,
@@ -30,10 +33,15 @@ const cardData = [
 
 const WhatCanYouDo = () => {
   const { t } = useTranslation()
+  const { openModal } = useModalContext()
 
   const cards = cardData.map((item) => (
     <InfoCard
-      action={() => {}}
+      action={() => {
+        openModal({
+          component: <SignUpDialog userRole={item.actionType} />
+        })
+      }}
       actionLabel={t(item.actionLabel)}
       cardWidth={460}
       description={t(item.description)}
