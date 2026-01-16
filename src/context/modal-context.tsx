@@ -17,6 +17,7 @@ interface Component {
 interface ModalProvideContext {
   openModal: (component: Component, delayToClose?: number) => void
   closeModal: () => void
+  setModalOnCross: (action: (() => void) | null) => void
 }
 
 interface ModalProviderProps {
@@ -32,11 +33,14 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const [paperProps, setPaperProps] = useState<PaperProps>({})
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
 
+  const [onCrossClick, setOnCrossClick] = useState<(() => void) | null>(null)
+
   const closeModal = useCallback(() => {
     setModal(null)
     setPaperProps({})
     setTimer(null)
-  }, [setModal, setPaperProps, setTimer])
+    setOnCrossClick(null)
+  }, [])
 
   const closeModalAfterDelay = useCallback(
     (delay?: number) => {
@@ -56,9 +60,13 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
     [setModal, setPaperProps, closeModalAfterDelay]
   )
 
+  const setModalOnCross = useCallback((action: (() => void) | null) => {
+    setOnCrossClick(() => action)
+  }, [])
+
   const contextValue = useMemo(
-    () => ({ openModal, closeModal }),
-    [closeModal, openModal]
+    () => ({ openModal, closeModal, setModalOnCross }),
+    [closeModal, openModal, setModalOnCross]
   )
 
   return (
@@ -68,6 +76,7 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
         <PopupDialog
           closeModalAfterDelay={closeModalAfterDelay}
           content={modal}
+          onCrossClick={onCrossClick}
           paperProps={paperProps}
           timerId={timer}
         />

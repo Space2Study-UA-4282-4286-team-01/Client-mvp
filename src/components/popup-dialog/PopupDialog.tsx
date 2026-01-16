@@ -15,13 +15,15 @@ interface PopupDialogProps {
   paperProps: PaperProps
   timerId: NodeJS.Timeout | null
   closeModalAfterDelay: (delay?: number) => void
+  onCrossClick: (() => void) | null
 }
 
 const PopupDialog: FC<PopupDialogProps> = ({
   content,
   paperProps,
   timerId,
-  closeModalAfterDelay
+  closeModalAfterDelay,
+  onCrossClick
 }) => {
   const { isMobile } = useBreakpoints()
 
@@ -30,6 +32,14 @@ const PopupDialog: FC<PopupDialogProps> = ({
 
   const { closeModal } = useModalContext()
 
+  const handleIconClose = () => {
+    if (onCrossClick) {
+      onCrossClick()
+    } else {
+      closeModal()
+    }
+  }
+
   return (
     <Dialog
       PaperProps={paperProps}
@@ -37,6 +47,7 @@ const PopupDialog: FC<PopupDialogProps> = ({
       disableRestoreFocus
       fullScreen={isMobile}
       maxWidth='xl'
+      onClose={closeModal}
       open
     >
       <Box
@@ -45,7 +56,7 @@ const PopupDialog: FC<PopupDialogProps> = ({
         onMouseOver={handleMouseOver}
         sx={styles.box}
       >
-        <IconButton onClick={() => closeModal()} sx={styles.icon}>
+        <IconButton onClick={handleIconClose} sx={styles.icon}>
           <CloseIcon />
         </IconButton>
         <Box sx={styles.contentWraper}>{content}</Box>
