@@ -1,20 +1,25 @@
 import { useState, useRef, useCallback } from 'react'
-import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined'
 import { useTranslation } from 'react-i18next'
+import useBreakpoints from '~/hooks/use-breakpoints'
+import { useStepContext } from '~/context/step-context'
 
 import { style } from '~/containers/tutor-home-page/add-photo-step/AddPhotoStep.style'
 import { validationData } from '~/containers/tutor-home-page/add-photo-step/constants'
+import { tutorStepLabels } from '~/components/user-steps-wrapper/constants'
 
 const AddPhotoStep = ({ btnsBox }) => {
+  const { stepData, handleStepData } = useStepContext()
   const { t } = useTranslation()
-  const theme = useTheme()
-  const isMobileOrTablet = useMediaQuery(theme.breakpoints.down('md'))
+  const { isLaptopAndAbove } = useBreakpoints()
   const [file, setFile] = useState(null)
-  const [previewUrl, setPreviewUrl] = useState('')
   const [error, setError] = useState('')
   const [isDragOver, setIsDragOver] = useState(false)
   const inputRef = useRef(null)
+
+  const photoLabel = tutorStepLabels[3]
+  const selectedValue = stepData[photoLabel] || []
 
   const validateFile = useCallback(
     (selectedFile) => {
@@ -35,15 +40,15 @@ const AddPhotoStep = ({ btnsBox }) => {
       if (validationError) {
         setError(validationError)
         setFile(null)
-        setPreviewUrl('')
+        handleStepData(photoLabel, [])
         return
       }
       setError('')
       setFile(selectedFile)
       const url = URL.createObjectURL(selectedFile)
-      setPreviewUrl(url)
+      handleStepData(photoLabel, [url])
     },
-    [validateFile]
+    [validateFile, handleStepData, photoLabel]
   )
 
   const handleFileChange = (event) => {
@@ -78,11 +83,11 @@ const AddPhotoStep = ({ btnsBox }) => {
   return (
     <Box sx={style.root}>
       <Box sx={style.imgContainer}>
-        {previewUrl ? (
+        {selectedValue ? (
           <Box
             alt={t('becomeTutor.photo.imageAlt')}
             component='img'
-            src={previewUrl}
+            src={selectedValue}
             sx={style.img}
           />
         ) : (
@@ -131,9 +136,9 @@ const AddPhotoStep = ({ btnsBox }) => {
             {error}
           </Typography>
         )}
-        {!isMobileOrTablet && <Box sx={style.btnsBox}>{btnsBox}</Box>}
+        {isLaptopAndAbove && <Box sx={style.btnsBox}>{btnsBox}</Box>}
       </Box>
-      {isMobileOrTablet && <Box sx={style.btnsBox}>{btnsBox}</Box>}
+      {!isLaptopAndAbove && <Box sx={style.btnsBox}>{btnsBox}</Box>}
     </Box>
   )
 }
