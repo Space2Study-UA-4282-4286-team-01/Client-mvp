@@ -33,6 +33,9 @@ import questionPage from './question-page.json'
 import subjectsPage from './subjects-page.json'
 
 const en = {
+  becomeTutor,
+  common,
+
   translations: {
     common,
     errorPage,

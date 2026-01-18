@@ -17,6 +17,7 @@
     "@vitest/coverage-v8": "^0.34.6",
     "allotment": "^1.19.3",
     "axios": "^1.6.0",
+    "country-state-city": "^3.2.1",
     "date-fns": "^2.30.0",
     "emoji-mart": "^5.5.2",
     "i18next": "^23.6.0",

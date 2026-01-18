@@ -1,17 +1,24 @@
-import { nameField, textField } from '~/utils/validations/common'
+import { nameField } from '~/utils/validations/common'
 
 export const initialValues = {
   firstName: '',
   lastName: '',
   country: null,
   city: null,
-  professionalSummary: ''
+  professionalSummary: '',
+  isAgeConfirmed: false // Додаємо це поле, воно потрібне для студента
 }
 
 export const validations = {
   firstName: nameField,
-  lastName: nameField,
-  professionalSummary: textField(0, 200)
+  lastName: nameField
 }
 
 export const tutorStepLabels = ['generalInfo', 'subjects', 'language', 'photo']
+
+export const studentStepLabels = [
+  'generalInfo',
+  'subjects',
+  'language',
+  'photo'
+]
