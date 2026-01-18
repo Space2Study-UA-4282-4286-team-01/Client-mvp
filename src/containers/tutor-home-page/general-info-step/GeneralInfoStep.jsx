@@ -9,7 +9,7 @@ import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormHelperText from '@mui/material/FormHelperText'
 
-import notebookImg from '~/assets/img/login-img.png'
+import notebookImg from '~/assets/img/tutor-home-page/become-tutor/general-info.svg'
 import { useStepContext } from '~/context/step-context'
 import { tutorStepLabels } from '~/components/user-steps-wrapper/constants'
 import { styles } from '~/containers/tutor-home-page/general-info-step/GeneralInfoStep.styles'
