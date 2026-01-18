@@ -4,12 +4,12 @@ export const styles = {
   container: {
     display: 'flex',
     flexDirection: { xs: 'column', md: 'row' },
-    gap: { xs: 2, md: 3 }, // Зменшили gap з 4 до 3
+    gap: { xs: 2, md: 3 },
     height: 'auto',
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    p: { xs: 0, md: 0 }, // Прибрали внутрішній padding контейнера
+    p: { xs: 0, md: 0 },
     ...fadeAnimation
   },
   imgContainer: {
@@ -21,7 +21,6 @@ export const styles = {
 
     '& img': {
       width: '100%',
-      // Зробили картинку ще компактнішою
       maxWidth: { xs: '180px', md: '280px' },
       height: 'auto',
       objectFit: 'contain'
@@ -33,26 +32,25 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     maxWidth: '500px',
-    pb: { xs: 8, md: 0 } // Відступ знизу тільки для телефону
+    pb: { xs: 8, md: 0 }
   },
   title: {
-    // 👇 КРИТИЧНО: Змінили h4 на h5, щоб заголовок не займав пів екрану
     typography: 'h5',
     fontWeight: 600,
-    mb: 1, // Зменшили відступ знизу (було 3)
+    mb: 1,
     color: 'primary.900'
   },
   form: {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    gap: 1 // Зменшили gap між інпутами (було 2 або 1.5)
+    gap: 1
   },
   helperText: {
-    mt: 0.5, // Мінімальний відступ
+    mt: 0.5,
     textAlign: 'left',
     color: 'text.secondary',
     typography: 'caption',
-    fontSize: '0.7rem' // Трохи менший шрифт
+    fontSize: '0.7rem'
   }
 }
