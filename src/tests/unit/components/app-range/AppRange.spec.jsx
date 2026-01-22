@@ -49,7 +49,7 @@ describe('AppRange tests', () => {
     expect(mockProps.onChange).toHaveBeenCalled()
   })
 
-  it('it should call onChange when input is changed', () => {
+  it('should call onChange when input is changed', () => {
     render(<AppRange {...mockProps} />)
     const [from, to] = screen.getAllByRole('textbox')
     fireEvent.change(from, { target: { value: '10' } })
@@ -58,16 +58,15 @@ describe('AppRange tests', () => {
     expect(mockProps.onChange).toHaveBeenCalledTimes(2)
   })
 
-  it('it should not call onChange when input is changed wit not a number', () => {
+  it('should not call onChange when input is changed with not a number', () => {
     render(<AppRange {...mockProps} />)
     const [from, to] = screen.getAllByRole('textbox')
     fireEvent.change(from, { target: { value: 'text' } })
-    expect(mockProps.onChange).not.toHaveBeenCalled()
     fireEvent.change(to, { target: { value: 'text' } })
-    expect(mockProps.onChange).not.toHaveBeenCalledTimes()
+    expect(mockProps.onChange).not.toHaveBeenCalled()
   })
 
-  it(' it should call onChange whith min number if input is empty', () => {
+  it('should call onChange with min number if input is empty', () => {
     render(<AppRange {...mockProps} />)
     const from = screen.getAllByRole('textbox')[0]
     fireEvent.change(from, { target: { value: '10' } })
@@ -77,7 +76,7 @@ describe('AppRange tests', () => {
     expect(mockProps.onChange).toHaveBeenCalledTimes(2)
   })
 
-  it('it should update prices when input is blurred and input is greater than max value', () => {
+  it('should update prices when input is blurred and input is greater than max value', () => {
     render(<AppRange {...mockProps} />)
     const to = screen.getAllByRole('textbox')[1]
     fireEvent.change(to, { target: { value: '12345' } })
