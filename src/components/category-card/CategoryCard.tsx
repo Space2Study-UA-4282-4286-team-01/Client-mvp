@@ -1,11 +1,12 @@
-import { Typography } from '@mui/material'
-import Box from '@mui/material/Box/Box'
 import { FC } from 'react'
-import { ICONS_MAP } from '~/constants/icons'
-import { CategoryInterface, UserRole, UserRoleEnum } from '~/types'
+import Box from '@mui/material/Box/Box'
+import { Typography } from '@mui/material'
 import { alpha } from '@mui/material/styles'
+
+import { ICONS_MAP } from '~/constants/icons'
 import { styles } from './CategoryCard.styles'
 
+import { CategoryInterface, UserRole, UserRoleEnum } from '~/types'
 interface CategoryCardProps {
   category: CategoryInterface
   role: UserRole | ''
