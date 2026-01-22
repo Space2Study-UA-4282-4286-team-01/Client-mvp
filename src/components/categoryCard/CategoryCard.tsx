@@ -13,7 +13,9 @@ interface CategoryCardProps {
 
 export const CategoryCard: FC<CategoryCardProps> = ({ category, role }) => {
   const IconComponent =
-    ICONS_MAP[category.appearance.icon.toLowerCase() as keyof typeof ICONS_MAP]
+    ICONS_MAP[
+      category.appearance.icon.toLowerCase() as keyof typeof ICONS_MAP
+    ] || ICONS_MAP.default
   const isUserStudent = role === UserRoleEnum.Student
   const totalOffers = isUserStudent
     ? `${category.totalOffers.student} ${UserRoleEnum.Student}`

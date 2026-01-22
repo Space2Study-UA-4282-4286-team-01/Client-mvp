@@ -9,7 +9,8 @@ import {
   LegendToggle,
   Star,
   AccountBalance,
-  Science
+  Science,
+  HelpOutline
 } from '@mui/icons-material'
 
 export const ICONS_MAP = {
@@ -23,5 +24,6 @@ export const ICONS_MAP = {
   legendToggle: LegendToggle,
   star: Star,
   accountBalance: AccountBalance,
-  science: Science
+  science: Science,
+  default: HelpOutline
 }

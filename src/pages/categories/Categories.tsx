@@ -10,7 +10,6 @@ import { CategoryInterface, ItemsWithCount } from '~/types'
 
 const Categories = () => {
   const { userRole } = useAppSelector((state) => state.appMain)
-
   const serviceFunction = useCallback(() => categoryService.getCategories(), [])
 
   const { response, loading } = useAxios<ItemsWithCount<CategoryInterface>>({
