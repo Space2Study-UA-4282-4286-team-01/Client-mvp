@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { useCallback } from 'react'
-import { CategoryCard } from '~/components/categoryCard/CategoryCard'
+import { CategoryCard } from '~/components/category-card/CategoryCard'
 import Loader from '~/components/loader/Loader'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import useAxios from '~/hooks/use-axios'
