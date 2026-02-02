@@ -5,6 +5,11 @@
   "searchLabel": "What would you like to learn?",
   "viewMore": "View more",
   "offers": "offers",
+  "questionFind": "Can't find what you're looking for?",
+  "request":"Request a new",
+  "or": "or",
+  "category": "category",
+  "subject": "subject",
   "newSubject": {
     "successMessage": "Request send successfully",
     "title": "Request a new study",
