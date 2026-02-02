@@ -45,6 +45,14 @@ const PopupDialog: FC<PopupDialogProps> = ({
   }
   const handleCancel = () => setShowConfirm(false)
 
+  const handleIconClose = () => {
+    if (onCrossClick) {
+      onCrossClick()
+    } else {
+      closeModal()
+    }
+  }
+
   return (
     <Dialog
       PaperProps={paperProps}
@@ -52,6 +60,7 @@ const PopupDialog: FC<PopupDialogProps> = ({
       disableRestoreFocus
       fullScreen={isMobile}
       maxWidth='xl'
+      onClose={closeModal}
       open
     >
       <Box

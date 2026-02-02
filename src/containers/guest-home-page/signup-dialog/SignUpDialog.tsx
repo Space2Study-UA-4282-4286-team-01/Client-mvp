@@ -7,7 +7,9 @@ import studentImg from '~/assets/img/signup-dialog/student.svg'
 import tutorImg from '~/assets/img/signup-dialog/tutor.svg'
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import { signup } from '~/constants'
-import { ChangeEvent } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
+import ConfirmDialog from '~/components/confirm-dialog/ConfirmDialog'
+import { useModalContext } from '~/context/modal-context'
 
 const SignUpDialog = ({ userRole }: { userRole: string }) => {
   const images: { [key: string]: string } = {
@@ -18,6 +20,16 @@ const SignUpDialog = ({ userRole }: { userRole: string }) => {
 
   const { t } = useTranslation()
 
+  const { setModalOnCross, closeModal } = useModalContext()
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
+
+  useEffect(() => {
+    setModalOnCross(() => setIsConfirmOpen(true))
+    return () => {
+      setModalOnCross(null)
+    }
+  }, [setModalOnCross])
+
   const handleInputChange =
     (field: string) =>
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -26,6 +38,14 @@ const SignUpDialog = ({ userRole }: { userRole: string }) => {
   const handleSubmit = () => {}
   const data = {}
   const errors = {}
+
+  const handleConfirmAction = () => {
+    closeModal()
+  }
+
+  const handleDismissAction = () => {
+    setIsConfirmOpen(false)
+  }
 
   return (
     <Box sx={styles.root}>
@@ -51,6 +71,13 @@ const SignUpDialog = ({ userRole }: { userRole: string }) => {
           />
         </Box>
       </Box>
+      <ConfirmDialog
+        message='questions.unsavedChanges'
+        onConfirm={handleConfirmAction}
+        onDismiss={handleDismissAction}
+        open={isConfirmOpen}
+        title='titles.confirmTitle'
+      />
     </Box>
   )
 }

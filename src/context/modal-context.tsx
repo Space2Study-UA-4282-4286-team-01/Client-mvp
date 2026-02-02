@@ -31,6 +31,7 @@ interface Component {
 interface ModalProvideContext {
   openModal: (component: Component, delayToClose?: number) => void
   closeModal: () => void
+  setModalOnCross: (action: (() => void) | null) => void
 }
 
 interface ModalProviderProps {
@@ -47,6 +48,8 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
   const [confirmOnClose, setConfirmOnClose] =
     useState<ConfirmOnCloseConfig | null>(null)
+
+  const [onCrossClick, setOnCrossClick] = useState<(() => void) | null>(null)
 
   const closeModal = useCallback(() => {
     setModal(null)
@@ -76,9 +79,13 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
     [setModal, setPaperProps, setConfirmOnClose, closeModalAfterDelay]
   )
 
+  const setModalOnCross = useCallback((action: (() => void) | null) => {
+    setOnCrossClick(() => action)
+  }, [])
+
   const contextValue = useMemo(
-    () => ({ openModal, closeModal }),
-    [closeModal, openModal]
+    () => ({ openModal, closeModal, setModalOnCross }),
+    [closeModal, openModal, setModalOnCross]
   )
 
   return (
@@ -89,6 +96,7 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
           closeModalAfterDelay={closeModalAfterDelay}
           confirmOnClose={confirmOnClose}
           content={modal}
+          onCrossClick={onCrossClick}
           paperProps={paperProps}
           timerId={timer}
         />
