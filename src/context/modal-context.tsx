@@ -8,10 +8,24 @@ import {
 } from 'react'
 import PopupDialog from '~/components/popup-dialog/PopupDialog'
 import { PaperProps } from '@mui/material/Paper'
+import { ConfirmDialogProps } from '~/components/confirm-dialog/ConfirmDialog'
+
+type ConfirmDialogControlledProps = 'open' | 'onConfirm' | 'onDismiss'
+
+export interface ConfirmOnCloseConfig<
+  P extends Omit<ConfirmDialogProps, ConfirmDialogControlledProps> = Omit<
+    ConfirmDialogProps,
+    ConfirmDialogControlledProps
+  >
+> {
+  component: FC<P & Pick<ConfirmDialogProps, ConfirmDialogControlledProps>>
+  props: P
+}
 
 interface Component {
   component: React.ReactElement
   paperProps?: PaperProps
+  confirmOnClose?: ConfirmOnCloseConfig
 }
 
 interface ModalProvideContext {
@@ -32,15 +46,17 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const [modal, setModal] = useState<React.ReactElement | null>(null)
   const [paperProps, setPaperProps] = useState<PaperProps>({})
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
+  const [confirmOnClose, setConfirmOnClose] =
+    useState<ConfirmOnCloseConfig | null>(null)
 
   const [onCrossClick, setOnCrossClick] = useState<(() => void) | null>(null)
 
   const closeModal = useCallback(() => {
     setModal(null)
     setPaperProps({})
+    setConfirmOnClose(null)
     setTimer(null)
-    setOnCrossClick(null)
-  }, [])
+  }, [setModal, setPaperProps, setConfirmOnClose, setTimer])
 
   const closeModalAfterDelay = useCallback(
     (delay?: number) => {
@@ -51,13 +67,16 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   )
 
   const openModal = useCallback(
-    ({ component, paperProps }: Component, delayToClose?: number) => {
+    (
+      { component, paperProps, confirmOnClose }: Component,
+      delayToClose?: number
+    ) => {
       setModal(component)
-
       paperProps && setPaperProps(paperProps)
+      setConfirmOnClose(confirmOnClose ?? null)
       delayToClose && closeModalAfterDelay(delayToClose)
     },
-    [setModal, setPaperProps, closeModalAfterDelay]
+    [setModal, setPaperProps, setConfirmOnClose, closeModalAfterDelay]
   )
 
   const setModalOnCross = useCallback((action: (() => void) | null) => {
@@ -75,6 +94,7 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
       {modal && (
         <PopupDialog
           closeModalAfterDelay={closeModalAfterDelay}
+          confirmOnClose={confirmOnClose}
           content={modal}
           onCrossClick={onCrossClick}
           paperProps={paperProps}

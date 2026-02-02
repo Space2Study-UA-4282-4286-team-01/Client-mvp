@@ -9,6 +9,7 @@ import FindBlock from '~/components/find-block/FindBlock'
 
 import { styles } from '~/pages/tutor-home/TutorHome.styles'
 import { translationKey } from '~/components/find-block/find-student-constants'
+import ConfirmDialog from '~/components/confirm-dialog/ConfirmDialog'
 
 const TutorHome = () => {
   const { openModal } = useModalContext()
@@ -18,6 +19,13 @@ const TutorHome = () => {
     if (isFirstLogin) {
       openModal({
         component: <UserStepsWrapper userRole={userRole} />,
+        confirmOnClose: {
+          component: ConfirmDialog,
+          props: {
+            title: 'titles.confirmTitle',
+            message: 'questions.unsavedChanges'
+          }
+        },
         paperProps: {
           sx: styles.modal
         }

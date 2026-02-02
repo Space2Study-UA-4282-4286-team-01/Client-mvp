@@ -12,7 +12,7 @@ import { styles } from '~/components/confirm-dialog/ConfirmDialog.styles'
 
 import { ButtonVariantEnum } from '~/types'
 
-interface ConfirmDialogProps {
+export interface ConfirmDialogProps {
   message: string
   title: string
   confirmButton?: string
