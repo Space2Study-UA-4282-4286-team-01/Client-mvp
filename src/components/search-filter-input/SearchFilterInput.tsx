@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { InputBaseProps } from '@mui/material/InputBase'
 import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
+import { SxProps, Theme } from '@mui/material/styles'
 
 import AppButton from '~/components/app-button/AppButton'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
@@ -14,11 +15,13 @@ import { styles } from '~/components/search-filter-input/SearchFilterInput.style
 interface SearchFilterInputProps {
   updateFilter: (value: string) => void
   textFieldProps: InputBaseProps
+  sx?: SxProps<Theme>
 }
 
 const SearchFilterInput = ({
   updateFilter,
-  textFieldProps
+  textFieldProps,
+  sx
 }: SearchFilterInputProps) => {
   const [search, setSearch] = useState<string>('')
   const { t } = useTranslation()
@@ -50,7 +53,7 @@ const SearchFilterInput = ({
   }, [])
 
   return (
-    <Box sx={styles.container}>
+    <Box sx={[styles.container, sx || {}] as SxProps<Theme>}>
       <InputWithIcon
         onChange={onChange}
         onClear={onClear}
