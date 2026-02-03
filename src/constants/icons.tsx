@@ -1,0 +1,29 @@
+import {
+  Language,
+  DesignServices,
+  MusicNote,
+  Monitor,
+  Biotech,
+  Tag,
+  Palette,
+  LegendToggle,
+  Star,
+  AccountBalance,
+  Science,
+  HelpOutline
+} from '@mui/icons-material'
+
+export const ICONS_MAP = {
+  language: Language,
+  design: DesignServices,
+  music: MusicNote,
+  monitor: Monitor,
+  biotech: Biotech,
+  tag: Tag,
+  palette: Palette,
+  legendToggle: LegendToggle,
+  star: Star,
+  accountBalance: AccountBalance,
+  science: Science,
+  default: HelpOutline
+}
