@@ -1,17 +1,16 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect } from 'react'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { markFirstLoginComplete } from '~/redux/reducer'
 import StepWrapper from '~/components/step-wrapper/StepWrapper'
-
 import { StepProvider } from '~/context/step-context'
 
 import GeneralInfoStep from '~/containers/tutor-home-page/general-info-step/GeneralInfoStep'
 import AddPhotoStep from '~/containers/tutor-home-page/add-photo-step/AddPhotoStep'
 import SubjectsStep from '~/containers/tutor-home-page/subjects-step/SubjectsStep'
 import LanguageStep from '~/containers/tutor-home-page/language-step/LanguageStep'
-
 import {
   tutorStepLabels,
+  studentStepLabels,
   initialValues
 } from '~/components/user-steps-wrapper/constants'
 import { student } from '~/constants'
@@ -21,28 +20,29 @@ interface UserStepsWrapperProps {
 }
 
 const UserStepsWrapper: FC<UserStepsWrapperProps> = ({ userRole }) => {
-  const [isUserFetched, setIsUserFetched] = useState(false)
   const dispatch = useAppDispatch()
+  const isStudent = userRole === student
+
+  const currentInitialValues = {
+    ...initialValues,
+    isAgeConfirmed: !isStudent
+  }
 
   useEffect(() => {
     dispatch(markFirstLoginComplete())
   }, [dispatch])
 
+  const stepLabels = isStudent ? studentStepLabels : tutorStepLabels
+
   const childrenArr = [
-    <GeneralInfoStep
-      isUserFetched={isUserFetched}
-      key='1'
-      setIsUserFetched={setIsUserFetched}
-    />,
-    <SubjectsStep key='2' />,
-    <LanguageStep key='3' />,
-    <AddPhotoStep key='4' />
+    <GeneralInfoStep btnsBox={null} isStudent={isStudent} key='1' />,
+    <SubjectsStep btnsBox={null} key='2' />,
+    <LanguageStep btnsBox={null} key='3' />,
+    <AddPhotoStep btnsBox={null} key='4' />
   ]
 
-  const stepLabels = userRole === student ? '' : tutorStepLabels
-
   return (
-    <StepProvider initialValues={initialValues} stepLabels={stepLabels}>
+    <StepProvider initialValues={currentInitialValues} stepLabels={stepLabels}>
       <StepWrapper steps={stepLabels}>{childrenArr}</StepWrapper>
     </StepProvider>
   )

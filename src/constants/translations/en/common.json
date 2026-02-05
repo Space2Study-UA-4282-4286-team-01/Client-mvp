@@ -60,6 +60,7 @@
     "closeOffer": "Close an offer",
     "sortBy": "Sort by:",
     "subject": "Subject:",
+    "ageConfirmation": "I confirm that I am over 18 years old",
     "level": "Level:"
   },
   "errorMessages": {
@@ -73,7 +74,8 @@
     "shortText": "This text is too short",
     "longText": "This text is too long",
     "numbersOnly": "Please enter a valid number",
-    "positiveNumbersOnly": "Please enter a positive number"
+    "positiveNumbersOnly": "Please enter a positive number",
+    "ageConfirmation": "You must confirm your age"
   },
   "levels": {
     "beginner": "Beginner",
