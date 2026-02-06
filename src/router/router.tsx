@@ -17,6 +17,7 @@ import { studentRouter } from '~/router/routes/studentRouter'
 import { guestRouter } from '~/router/routes/guestRouter'
 import { authRouter } from '~/router/routes/authRouter'
 import { home } from '~/router/constants/crumbs'
+import DevModalTest from '~/pages/dev-modal-test/DevModalTest'
 
 const HomeRoute = lazy(() => import('~/router/helpers/HomeRoute'))
 const Logout = lazy(() => import('~/pages/logout/Logout'))
@@ -28,6 +29,7 @@ export const routerConfig = (
     path={guestRoutes.home.route}
   >
     <Route element={<AppContent />} handle={{ crumb: home }}>
+      <Route element={<DevModalTest />} path='/dev-modal-test' />
       <Route element={<HomeRoute />} index />
       {guestRouter}
       {authRouter}
