@@ -29,15 +29,21 @@ const TitleWithDescription = ({
 
   return (
     <Box sx={style.wrapper}>
-      <Typography sx={style.title}>{title}</Typography>
+      <Typography sx={style.title} variant='h5'>
+        {title}
+      </Typography>
       {isDescriptionTooltip ? (
         <Tooltip open={tooltipVisible} placement='bottom' title={description}>
-          <Typography onClick={handleTooltip} sx={style.description}>
+          <Typography
+            onClick={handleTooltip}
+            sx={style.description}
+            variant='body2'
+          >
             {description}
           </Typography>
         </Tooltip>
       ) : (
-        <Typography onClick={handleTooltip} sx={style.description}>
+        <Typography sx={style.description} variant='body2'>
           {description}
         </Typography>
       )}
