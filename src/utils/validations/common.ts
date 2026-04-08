@@ -82,3 +82,8 @@ export const helperTextHandler = (
 ) => {
   return emptyField(value, emptyMessage, validations[marker](value))
 }
+
+export const nameFieldValidator = (value: string) => {
+  const error = nameField(value)
+  return error || undefined
+}
